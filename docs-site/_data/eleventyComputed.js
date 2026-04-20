@@ -2,8 +2,6 @@ module.exports = {
   layout: (data) => data.layout || 'page',
 
   permalink: (data) => {
-    if (data.permalink !== undefined) return data.permalink;
-
     const inputPath = data.page.inputPath || '';
     let p = inputPath.replace(/^(\.\.\/|\.\/)+/, '').replace(/\.md$/, '');
 
@@ -15,7 +13,7 @@ module.exports = {
   title: (data) => {
     if (data.title) return data.title;
     const slug = (data.page && data.page.fileSlug) || '';
-    if (!slug || slug === 'README') return data.site && data.site.title ? data.site.title : 'Home';
+    if (!slug || slug === 'README') return (data.site && data.site.title) ? data.site.title : 'Home';
     return slug;
   }
 };
