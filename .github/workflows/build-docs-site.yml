@@ -1,0 +1,76 @@
+name: Build and deploy docs site
+
+on:
+  push:
+    branches: [main]
+    paths:
+      # Rebuild when any source that feeds the site changes
+      - '**/*.md'
+      - 'media/**'
+      - 'docs-site/**'
+      - '.eleventyignore'
+      - '.github/workflows/build-docs-site.yml'
+  workflow_dispatch:
+
+# Permissions required for GitHub Pages deployment
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow one concurrent deployment; cancel any in-progress run superseded
+# by a newer push.
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+        # No cache on the first run because docs-site/package-lock.json
+        # won't exist yet. After first successful install, adding
+        # `cache: npm` + `cache-dependency-path: docs-site/package-lock.json`
+        # is a safe follow-up.
+
+      - name: Install dependencies
+        working-directory: docs-site
+        run: npm install
+
+      - name: Setup Pages
+        id: pages
+        uses: actions/configure-pages@v5
+
+      - name: Build site
+        working-directory: docs-site
+        env:
+          # Pass the Pages base path (e.g. "/dvs-trust-framework") into the
+          # build so govuk-frontend asset URLs resolve correctly on subpath
+          # deploys. Root-domain deploys get an empty string and work too.
+          BASEURL: ${{ steps.pages.outputs.base_path }}
+        run: npm run build
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs-site/_site
+
+  deploy:
+    name: Deploy
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
