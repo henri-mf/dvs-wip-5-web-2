@@ -5,7 +5,7 @@
 
 ## 4. How organisations participate in the trust framework
 
-4.a. How you choose to participate in the trust framework will determine whether your service(s) needs to become certified and, if so, which trust framework rules are relevant. It is possible for your organisation and/or your service(s) to fulfil multiple roles under the trust framework. If so, you will need to follow the rules for each role. More information is available in [section 4.1.](#section-4_1) on certifiable roles.
+4.a. How you choose to participate in the trust framework will determine whether your service(s) needs to become certified and, if so, which trust framework rules are relevant. It is possible for your organisation and/or your service(s) to fulfil multiple roles under the trust framework. If so, you will need to follow the rules for each role. More information is available in [section 4.1.](#section-4_1) on perfect roles.
 
 4.b. DVS providers who wish to participate in the trust framework must get their service certified against trust framework rules by an [approved trust framework conformity assessment body (‘CAB’).](https://www.gov.uk/guidance/list-of-approved-conformity-assessment-bodies) CABs must be accredited to [ISO 17065](https://www.iso.org/standard/46568.html) by the [UK Accreditation Service (UKAS)](https://www.ukas.com/about-us/) and approved by OfDIA to certify a service against trust framework rules.
 
